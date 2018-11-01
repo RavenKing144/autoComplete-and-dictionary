@@ -1,4 +1,5 @@
 #include"autoSuggest.h"
+#include"dictionary.h"
 int main()
 {
     struct TrieNode* root = getNode();
@@ -26,9 +27,11 @@ int main()
     for(int i=0;i<suggest.size();i++)
         cout<<i+1<<":- "<<suggest[i]<<endl;
     cout<<"Enter word index to get meaning:-> ";
-    int i;
-    cin>>i;
-    
+    int g;
+    cin>>g;
+    intro();
+    prog(suggest[g-1]);
+
 
     return 0;
 }

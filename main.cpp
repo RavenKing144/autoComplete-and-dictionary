@@ -1,3 +1,4 @@
+#include<bits/stdc++.h>
 #include"autoSuggest.h"
 #include"dictionary.h"
 int main()
@@ -29,8 +30,7 @@ int main()
     cout<<"Enter word index to get meaning:-> ";
     int g;
     cin>>g;
-    intro();
-    prog(suggest[g-1]);
+    //search_meaning(suggest[g-1]);
 
 
     return 0;

@@ -1,37 +1,26 @@
-#include<bits/stdc++.h>
-#include"autoSuggest.h"
 #include"dictionary.h"
-int main()
+
+  int main()
 {
-    struct TrieNode* root = getNode();
-    string word;
-    fstream file;
-    string filename="code.txt";
-    file.open("code.txt");
-    string s="";
-    while(file){
-
-        string p;
-        getline(file,p);
-        insert(root, p);
-    }
-
-    cout<<"Enter the word:-"<<endl;
-    cin>>word;
-    int comp = printAutoSuggestions(root,word );
-
-    if (comp == -1)
-        cout << "No other strings found with this prefix\n";
-
-    else if (comp == 0)
-        cout << "No string found with this prefix\n";
-    for(int i=0;i<suggest.size();i++)
-        cout<<i+1<<":- "<<suggest[i]<<endl;
-    cout<<"Enter word index to get meaning:-> ";
-    int g;
-    cin>>g;
-    //search_meaning(suggest[g-1]);
-
-
-    return 0;
+  Node *root = NULL;
+  dictionary *d;
+  fstream file;
+  file.open("file.txt");
+  while(!file.eof())
+  {
+    string word="",meaning="",temp="";
+    getline(file,temp);
+    int pos=temp.find(":");
+    word=temp.substr(0,pos);
+    meaning=temp.substr(pos+1);
+    //cout<<word<<" "<<meaning<<endl;
+    root=d->insert(root,word,meaning);
+  }
+  d->preOrder(root);
+  Node* s=d->search(root,"help");
+  if(s)
+    cout<<s->meaning<<endl;
+  else
+    cout<<"word not found"<<endl;
+  return 0;
 }

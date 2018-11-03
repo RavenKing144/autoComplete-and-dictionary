@@ -1,13 +1,15 @@
-
+// C++ program to demonstrate auto-complete feature
+// using Trie data structure.
 #include<bits/stdc++.h>
 using namespace std;
 
+// Alphabet size (# of symbols)
 #define ALPHABET_SIZE (26)
 
 // Converts key current character into index
 // use only 'a' through 'z' and lower case
 #define CHAR_TO_INDEX(c) ((int)c - (int)'a')
-vector<string>c;
+
 // trie node
 struct TrieNode
 {
@@ -32,7 +34,7 @@ struct TrieNode *getNode(void)
 
 // If not present, inserts key into trie.  If the
 // key is prefix of trie node, just marks leaf node
-void insert(TrieNode *root, string key)
+void insert(struct TrieNode *root,  const string key)
 {
     struct TrieNode *pCrawl = root;
 
@@ -50,7 +52,7 @@ void insert(TrieNode *root, string key)
 }
 
 // Returns true if key presents in trie, else false
-bool search(TrieNode *root, string key)
+bool search(struct TrieNode *root, const string key)
 {
     int length = key.length();
     struct TrieNode *pCrawl = root;
@@ -79,12 +81,11 @@ bool isLastNode(struct TrieNode* root)
 
 // Recursive function to print auto-suggestions for given
 // node.
-void suggestionsRec(TrieNode* root, string currPrefix)
+void suggestionsRec(struct TrieNode* root, string currPrefix)
 {
     // found a string in Trie with the given prefix
     if (root->isWordEnd)
     {
-        c.push_back(currPrefix);;
         cout << currPrefix;
         cout << endl;
     }
@@ -107,7 +108,7 @@ void suggestionsRec(TrieNode* root, string currPrefix)
 }
 
 // print suggestions for given query prefix.
-int printAutoSuggestions(TrieNode* root,string query)
+int printAutoSuggestions(TrieNode* root, const string query)
 {
     struct TrieNode* pCrawl = root;
 
@@ -151,36 +152,4 @@ int printAutoSuggestions(TrieNode* root,string query)
         suggestionsRec(pCrawl, prefix);
         return 1;
     }
-}
-
-// Driver Code
-int main()
-{
-    struct TrieNode* root = getNode();
-  fstream file;
-  file.open("file.txt");
-  while(!file.eof())
-  {
-    string word="",meaning="",temp="";
-    getline(file,temp);
-    int pos=temp.find(":");
-    word=temp.substr(0,pos);
-    meaning=temp.substr(pos+1);
-    //cout<<word<<" "<<meaning<<endl;
-    insert(root,word);
-  }
-  cout<<"Enter initials:->"<<endl;
-  string init;
-  cin>>init;
-    int comp = printAutoSuggestions(root, init);
-
-    if (comp == -1)
-        cout << "No other strings found with this prefix\n";
-
-    else if (comp == 0)
-        cout << "No string found with this prefix\n";
-    for(int i=0;i<c.size();i++)
-        cout<<c[i]<<endl;
-
-    return 0;
 }

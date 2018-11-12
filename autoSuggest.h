@@ -1,26 +1,18 @@
-// C++ program to demonstrate auto-complete feature
-// using Trie data structure.
-#include<bits/stdc++.h>
 using namespace std;
 
-// Alphabet size (# of symbols)
 #define ALPHABET_SIZE (26)
 
-// Converts key current character into index
-// use only 'a' through 'z' and lower case
 #define CHAR_TO_INDEX(c) ((int)c - (int)'a')
+vector<string>c;
+int i=0;
 
-// trie node
 struct TrieNode
 {
     struct TrieNode *children[ALPHABET_SIZE];
 
-    // isWordEnd is true if the node represents
-    // end of a word
     bool isWordEnd;
 };
 
-// Returns new trie node (initialized to NULLs)
 struct TrieNode *getNode(void)
 {
     struct TrieNode *pNode = new TrieNode;
@@ -32,8 +24,6 @@ struct TrieNode *getNode(void)
     return pNode;
 }
 
-// If not present, inserts key into trie.  If the
-// key is prefix of trie node, just marks leaf node
 void insert(struct TrieNode *root,  const string key)
 {
     struct TrieNode *pCrawl = root;
@@ -47,11 +37,9 @@ void insert(struct TrieNode *root,  const string key)
         pCrawl = pCrawl->children[index];
     }
 
-    // mark last node as leaf
     pCrawl->isWordEnd = true;
 }
 
-// Returns true if key presents in trie, else false
 bool search(struct TrieNode *root, const string key)
 {
     int length = key.length();
@@ -69,8 +57,6 @@ bool search(struct TrieNode *root, const string key)
     return (pCrawl != NULL && pCrawl->isWordEnd);
 }
 
-// Returns 0 if current node has a child
-// If all children are NULL, return 1.
 bool isLastNode(struct TrieNode* root)
 {
     for (int i = 0; i < ALPHABET_SIZE; i++)
@@ -79,18 +65,16 @@ bool isLastNode(struct TrieNode* root)
     return 1;
 }
 
-// Recursive function to print auto-suggestions for given
-// node.
 void suggestionsRec(struct TrieNode* root, string currPrefix)
 {
-    // found a string in Trie with the given prefix
     if (root->isWordEnd)
     {
-        cout << currPrefix;
+        cout << i+1<<":"<<currPrefix;
+        c.push_back(currPrefix);
         cout << endl;
+        i++;
     }
 
-    // All children struct node pointers are NULL
     if (isLastNode(root))
         return;
 
